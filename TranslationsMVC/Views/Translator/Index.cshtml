@@ -1,0 +1,46 @@
+﻿@model List<TranslatorModel>
+
+<div class="container">
+    <div class="card shadow border-0 mt-4">
+        <div class="card-header bg-secondary bg-gradient mt-0 py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2>Translators</h2>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Base Url</th>
+                    <th>Api Key</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var t in Model)
+                {
+                    <tr>
+                        <td>@t.Name</td>
+                        <td>@t.BaseUrl</td>
+                        <td>@t.ApiKey</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <a asp-controller="Translator" asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle">
+                New
+            </i>
+        </a>
+    </div>
+</div>
