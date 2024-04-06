@@ -16,7 +16,8 @@ public class SqlServerConnection : ISqlServerConnection
 
     private SqlConnection GetConnection()
     {
-        var connectionString = config.GetConnectionString("DefaultConnection");
+        var connectionString = config.GetConnectionString("DefaultConnection") ?? 
+            throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
         var connection = new SqlConnection(connectionString);
 
         try
