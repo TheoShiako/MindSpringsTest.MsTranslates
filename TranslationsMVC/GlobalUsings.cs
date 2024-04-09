@@ -1,5 +1,14 @@
-﻿global using Microsoft.AspNetCore.Mvc;
-global using Translations.Library.Interfaces;
+﻿global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using System.ComponentModel.DataAnnotations;
+global using System.Diagnostics;
 global using Translations.Library.DataAccess;
+global using Translations.Library.Interfaces;
 global using Translations.Library.Models;
+global using TranslationsMVC;
 global using TranslationsMVC.Data;
+global using TranslationsMVC.Models;
+global using TranslationsMVC.ViewModels;

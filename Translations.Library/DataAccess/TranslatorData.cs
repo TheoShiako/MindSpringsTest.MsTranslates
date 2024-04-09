@@ -1,9 +1,10 @@
 ﻿namespace Translations.Library.DataAccess;
-public class TranslatorsData : ITranslatorsData
+
+public class TranslatorData : ITranslatorsData
 {
     private readonly ISqlServerConnection sqlServerConnection;
 
-    public TranslatorsData(ISqlServerConnection sqlServerConnection)
+    public TranslatorData(ISqlServerConnection sqlServerConnection)
     {
         this.sqlServerConnection = sqlServerConnection;
     }

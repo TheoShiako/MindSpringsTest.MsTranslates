@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[Translators]
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
-    [Name] NVARCHAR(50) NOT NULL,
+    [Name] NVARCHAR(50) NOT NULL UNIQUE,
     [BaseUrl] NVARCHAR(100) NOT NULL, 
     [ApiKey] NVARCHAR(100) NULL
 )

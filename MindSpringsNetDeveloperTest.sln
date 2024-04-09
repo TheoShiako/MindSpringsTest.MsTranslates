@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationsMVC", "TranslationsMVC\TranslationsMVC.csproj", "{22FB2ADF-5EA8-4182-8459-6CCE2D885F17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TranslationsMVC", "TranslationsMVC\TranslationsMVC.csproj", "{22FB2ADF-5EA8-4182-8459-6CCE2D885F17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translations.Library", "Translations.Library\Translations.Library.csproj", "{069A84AF-036C-4253-9FC8-C6927760BCA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Translations.Library", "Translations.Library\Translations.Library.csproj", "{069A84AF-036C-4253-9FC8-C6927760BCA7}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Translations.Database", "Translations.Database\Translations.Database.sqlproj", "{5E4DA070-7AA6-4F60-A725-160FB4336C85}"
 EndProject

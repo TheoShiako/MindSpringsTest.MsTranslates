@@ -1,8 +1,5 @@
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using TranslationsMVC.Models;
-
 namespace TranslationsMVC.Controllers;
+
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
@@ -13,11 +10,6 @@ public class HomeController : Controller
     }
 
     public IActionResult Index()
-    {
-        return View();
-    }
-
-    public IActionResult Privacy()
     {
         return View();
     }

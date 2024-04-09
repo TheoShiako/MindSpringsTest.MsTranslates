@@ -1,0 +1,151 @@
+﻿@inject ITranslateText translateText
+@inject ITranslatorsData translatorsData
+@attribute [StreamRendering]
+
+<div class="card-body">
+
+    @if (translators == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <EditForm Model="textTransformModel" OnValidSubmit="TranslateText">
+            <DataAnnotationsValidator />
+
+            <div class="container">
+                <div class="row shadow-lg p-3">
+                    <div class="col-5">
+                        <label for="SearchText" class="m-3 text-info">Type text to translate here</label>
+                        <InputTextArea id="SearchText" class="form-control" rows="@rows" @bind-Value="textTransformModel.SearchText" />
+                        <div>
+                            <ValidationMessage For="() => textTransformModel!.SearchText" class="text-danger" />
+                        </div>
+                    </div>
+
+                    <div class="col-2 align-content-center mt-5 ">
+                        @if (translators.Any())
+                        {
+                            foreach (var t in translators)
+                            {
+                                <button class="btn btn-secondary form-control mb-1 text-center" @onclick="@(e => GetTranslatorToUse(e, t))">
+                                    @t.Name
+                                </button>
+                            }
+                        }
+                    </div>
+
+                    <div class="col-5 position-relative mh-100">
+
+                        @if (isTranslating)
+                        {
+                            <div class=" position-absolute top-50 start-50 translate-middle">
+                                <div class="spinner-border"></div>
+
+                            </div>
+                        }
+                        else
+                        {
+                            @if (isTranslationError)
+                            {
+                                <div class=" position-absolute top-50 start-50 translate-middle">
+                                    <p class="text-danger">@textTransformModel.Error</p>
+
+                                </div>
+                            }
+                            else
+                            {
+
+                                <div>
+                                    <label for="TransformedText" class="m-3 text-info">Translation</label>
+                                    <InputTextArea id="Translate" class="form-control" rows="@rows" @bind-Value="textTransformModel.TranslatedText" disabled />
+
+                                </div>
+
+                            }
+
+                        }
+                    </div>
+
+                </div>
+
+            </div>
+        </EditForm>
+
+        <div>
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <p class="text-danger">@errorMessage</p>     
+            }
+        </div>
+
+    }
+
+</div>
+
+@code {
+    private IEnumerable<TranslatorModel>? translators;
+    private TranslatorModel? translator;
+    private TranslationModel textTransformModel = new();
+    private string errorMessage="";
+    private bool isTranslating;
+    private bool isTranslationError;
+
+    int rows=5;
+
+    private void GetTranslatorToUse(MouseEventArgs e, TranslatorModel translator)
+    {
+        this.translator = translator;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            translators = await translatorsData.Get();
+            rows = translators.Any() ? rows + translators.Count() : rows;
+        }
+        catch (Exception)
+        {
+            errorMessage = ("No translators available due to server error.");
+        }
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            StateHasChanged();
+        }
+    }
+
+    public async Task TranslateText()
+    {
+        textTransformModel.TranslatedText = "";
+        errorMessage = "";
+        textTransformModel.Translator = translator!;
+        isTranslating = true;
+        isTranslationError = false;
+
+        try
+        {
+            var translation = await translateText.Translate(textTransformModel);
+
+            if(translation.Status==1)
+                textTransformModel.TranslatedText = translation.TranslatedText;
+            else
+                textTransformModel.Error = translation.Error;
+
+            isTranslationError = translation.Status == 0;
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+        finally
+        {
+            isTranslating = false;
+        }
+    }
+
+}

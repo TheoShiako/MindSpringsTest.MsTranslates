@@ -1,20 +1,9 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddControllersWithViews();
-
-builder.Services.AddScoped<ISqlServerConnection, SqlServerConnection>();
-builder.Services.AddScoped<ITranslatorsData, TranslatorsData>();
+//Add services and configuration using the 'ServiceConfiguration' Class
+builder.ConfigureServices();
 
 var app = builder.Build();
 
@@ -30,6 +19,12 @@ else
     app.UseHsts();
 }
 
+//Execute Db initialiser
+using var scope = app.Services.CreateScope();
+var initializer = scope.ServiceProvider.GetRequiredService<InitializeIdentityDb>();
+
+await initializer.RunAsync();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -40,6 +35,11 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapRazorPages();
+
+//Add blazor usage to MVC
+app.MapBlazorHub();
+
+//Add Serilog usage
+app.UseSerilogRequestLogging();
 
 app.Run();

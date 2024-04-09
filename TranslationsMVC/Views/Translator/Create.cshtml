@@ -1,47 +1,54 @@
 ﻿@model TranslatorModel
+@{
+    ViewData["Title"] = "New Translator";
+}
 
-<div class="card shadow border-0 mt-4">
-    <div class="row">
-        <div class="col-12 text-center">
-            <h2>New Translator</h2>
-        </div>
-    </div>
+<div class="container">
+    <form method="post">
+        <div class="card card-outline-info shadow-lg mt-4 p-2">
 
-    <div class="card-body p-4">
-        <form method="post" class="row">
-            <div class="border p-3">
-                <div class="form-floating py-2 col-12">
-                    <input asp-for="Name" class="form-control border-0 shadow"/>
-                    <label asp-for="Name" class="ms-2"/>
-                    <span asp-validation-for="Name" class="text-danger"/>
-                </div>
+            <div class="card-header bg-secondary bg-gradient mt-0 py-3">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h2>New Translator</h2>
 
-                <div class="form-floating py-2 col-12">
-                    <input asp-for="BaseUrl" class="form-control border-0 shadow" />
-                    <label asp-for="BaseUrl" class="ms-2" />
-                    <span asp-validation-for="Name" class="text-danger" />
-                </div>
-
-                <div class="form-floating py-2 col-12">
-                    <input asp-for="ApiKey" class="form-control border-0 shadow" />
-                    <label asp-for="ApiKey" class="ms-2" />
+                    </div>
                 </div>
             </div>
 
-            <div class="row pt-2">
+            <div class="card-body p-4">
+                <div class="border p-3">
+                    <div class="form-floating py-2 col-12">
+                        <input asp-for="Name" class="form-control border-0 shadow" />
+                        <label asp-for="Name" class="ms-2">Name</label>
+                        <span asp-validation-for="Name" class="text-danger" />
+                    </div>
+
+                    <div class="form-floating py-2 col-12">
+                        <input asp-for="BaseUrl" class="form-control border-0 shadow" />
+                        <label asp-for="BaseUrl" class="ms-2">Base Url</label>
+                        <span asp-validation-for="BaseUrl" class="text-danger" />
+                    </div>
+
+                    <div class="form-floating py-2 col-12">
+                        <input asp-for="ApiKey" class="form-control border-0 shadow" />
+                        <label asp-for="ApiKey" class="ms-2">Api Key</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer row ms-2 me-2">
                 <div class="col-6 col-md-3">
-                    <button type="submit" class="btn btn-primary form-control">
-                        Save
-                    </button>
+                    <input asp-action="Create" type="submit" class="btn btn-secondary form-control" value="Save" />
                 </div>
 
                 <div class="col-6 col-md-3">
-                    <a asp-controller="Translator" asp-action="Index" class="btn btn-primary border form-control">
+                    <a asp-controller="Translator" asp-action="Index" class="btn btn-outline-primary border form-control">
                         Back to List
                     </a>
                 </div>
             </div>
-        </form>
-    </div>
 
+        </div>
+    </form>
 </div>

@@ -1,8 +1,23 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Translate";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<partial name="_Notification" />
+
+<div class="m-5">
+
+    <div>
+        <div class="pt-5 text-center">
+            <h1 class="display-1 text-info-emphasis">Welcome To MS Translates</h1>
+            <h5 class="display-6 text-capitalize text-success-emphasis fw-semibold">Translations simplfied.</h5>
+        </div>
+
+        <div class="card align-content-center justify-content-center">
+
+            @(await Html.RenderComponentAsync<TranslateComponent>(RenderMode.Server))
+
+        </div>
+
+    </div>
+
 </div>

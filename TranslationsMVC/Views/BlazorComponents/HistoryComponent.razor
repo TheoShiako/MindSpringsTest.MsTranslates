@@ -1,0 +1,111 @@
+﻿@inject ITranslationData translationData
+@inject ILogger<HistoryComponent> logger
+@inject ITranslatorsData translatorData
+@attribute [StreamRendering]
+
+<div >
+    @if (translations == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else if (!translations.Any())
+    {
+        <p>No translation history available</p>
+    }
+    else
+    {
+        <QuickGrid Class="col-12 m-2" Items="filteredTranslations" Pagination="pagination">
+
+            <PropertyColumn Property="t=>t.SearchText" Title="User's Search Text">
+                <ColumnOptions>
+                    <input type="search" autofocus @bind="searchTextFilter" @bind:event="oninput" placeholder="Search Text..." style="font-style:italic"/>
+
+                </ColumnOptions>
+            </PropertyColumn>
+
+            <PropertyColumn Property="t=>t.TranslatedText" Title="Translation" />
+
+            <PropertyColumn Property="t=>t.Translator.Name" Sortable="true" Title="Translator">
+                <ColumnOptions>
+                    <div>
+                        <input type="search" autofocus @bind="translatorFilter" @bind:event="oninput" placeholder="Translator..." style="font-style:italic"/>
+                    </div>
+                </ColumnOptions>
+            </PropertyColumn>
+
+            <PropertyColumn Property="t=>t.Timestamp" Title="Date Searched" Format="dddd, dd MMMM yyyy" Sortable="true" >
+                <ColumnOptions>
+                    <div class="form-control">
+                        <div>
+                            <label>From</label>
+                            <input type="datetime-local" autofocus @bind="startDate" @bind:event="oninput" />
+                        </div>
+                        <div>
+                            <label class="me-3">To</label>
+                            <input type="datetime-local" autofocus @bind="endDate" @bind:event="oninput"/>
+                        </div>
+                    </div>
+                </ColumnOptions>
+            </PropertyColumn>
+        </QuickGrid>
+
+        <Paginator State="@pagination" />
+    }
+</div>
+
+@code {
+    private IEnumerable<TranslationModel>? translations;
+
+    PaginationState pagination = new PaginationState { ItemsPerPage = 20 };
+
+    private string? searchTextFilter;
+    private string? translatorFilter;
+    private DateTime? startDate;
+    private DateTime? endDate;
+
+    private IQueryable<TranslationModel>? filteredTranslations
+    {
+        get
+        {
+            var result = translations?.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(searchTextFilter))
+            {
+                result = result?.Where(t => t.SearchText.Contains(searchTextFilter, StringComparison.OrdinalIgnoreCase));
+            }
+            if (!string.IsNullOrWhiteSpace(translatorFilter))
+            {
+                result = result?.Where(t => t.Translator.Name.Contains(translatorFilter, StringComparison.OrdinalIgnoreCase));
+            }
+            if (startDate != null)
+            {
+                result = result?.Where(t => t.Timestamp >= startDate);
+            }
+            if (endDate != null)
+            {
+                result = result?.Where(t => t.Timestamp <= endDate);
+            }
+            return result;
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            translations = await translationData.Get();
+        }
+        catch(Exception ex)
+        {
+            logger.LogError("Error retrieving translations: {ex}.",ex);
+        }
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            StateHasChanged();
+        }
+    }
+
+}

@@ -59,6 +59,7 @@
     <Folder Include="Tables" />
     <Folder Include="StoredProcedure" />
     <Folder Include="StoredProcedure\Translator" />
+    <Folder Include="StoredProcedure\Translations" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Translators.sql" />
@@ -66,8 +67,17 @@
     <Build Include="StoredProcedure\Translator\spTranslators_Update.sql" />
     <Build Include="StoredProcedure\Translator\spTranslators_Get.sql" />
     <Build Include="StoredProcedure\Translator\spTranslators_Delete.sql" />
+    <Build Include="Tables\Translations.sql" />
+    <Build Include="StoredProcedure\Translations\spTranslations_Insert.sql" />
+    <Build Include="StoredProcedure\Translations\spTranslations_Get.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Translations.Database.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Translations.Database.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Script.PostDeployment.sql" />
   </ItemGroup>
 </Project>
