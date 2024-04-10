@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-
-namespace TranslationsMVC.Controllers;
+﻿namespace TranslationsMVC.Controllers;
 
 [Authorize]
 public class HistoryController : Controller

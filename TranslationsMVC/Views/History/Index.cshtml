@@ -15,6 +15,7 @@
 
         <div class="card-body h-100  col-12">
 
+            @* Gets and renders the blazor component (QuickGrid/DataTable) for display in view. *@
             @(await Html.RenderComponentAsync<HistoryComponent>(RenderMode.Server))
 
         </div>

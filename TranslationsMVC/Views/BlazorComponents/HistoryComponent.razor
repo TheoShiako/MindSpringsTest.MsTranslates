@@ -4,7 +4,7 @@
 @attribute [StreamRendering]
 
 
-@* A blazor component that contains a QuickGrid (DataTable) to display preeviously searched text and their responses *@
+@* A blazor component that contains a QuickGrid (DataTable) to display previously searched text and their responses *@
 <div>
     @if (translations == null)
     {
@@ -25,13 +25,14 @@
                 </ColumnOptions>
             </PropertyColumn>
 
-            <PropertyColumn Property="t=>t.StatusString" Title="Search Status">
+            <PropertyColumn Property="t=>t.StatusString" Title="Search Status" Sortable="true">
                 <ColumnOptions>
                     <div>
                         <input type="search" autofocus @bind="statusFilter" @bind:event="oninput" placeholder="Status..." style="font-style:italic" />
                     </div>
                 </ColumnOptions>
             </PropertyColumn>
+
             <PropertyColumn Property="t=>t.Response" Title="Search Response" />
 
             <PropertyColumn Property="t=>t.Translator.Name" Sortable="true" Title="Translator">

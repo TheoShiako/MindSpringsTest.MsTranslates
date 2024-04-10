@@ -1,5 +1,6 @@
 ﻿namespace TranslationsMVC.Controllers;
 
+//Controller handles User Authentication
 public class AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager) : Controller
 {
     public IActionResult Login(string? returnUrl = null)
