@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Translations.Library\Translations.Library.csproj" />
+    <ProjectReference Include="..\Translations.Library\MsTranslates.Library.csproj" />
   </ItemGroup>
 
 </Project>
