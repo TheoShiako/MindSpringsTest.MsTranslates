@@ -3,7 +3,9 @@
 @inject ITranslatorsData translatorData
 @attribute [StreamRendering]
 
-<div >
+
+@* A blazor component that contains a QuickGrid (DataTable) to display preeviously searched text and their responses *@
+<div>
     @if (translations == null)
     {
         <p><em>Loading...</em></p>
@@ -23,7 +25,14 @@
                 </ColumnOptions>
             </PropertyColumn>
 
-            <PropertyColumn Property="t=>t.TranslatedText" Title="Translation" />
+            <PropertyColumn Property="t=>t.StatusString" Title="Search Status">
+                <ColumnOptions>
+                    <div>
+                        <input type="search" autofocus @bind="statusFilter" @bind:event="oninput" placeholder="Status..." style="font-style:italic" />
+                    </div>
+                </ColumnOptions>
+            </PropertyColumn>
+            <PropertyColumn Property="t=>t.Response" Title="Search Response" />
 
             <PropertyColumn Property="t=>t.Translator.Name" Sortable="true" Title="Translator">
                 <ColumnOptions>
@@ -60,6 +69,7 @@
 
     private string? searchTextFilter;
     private string? translatorFilter;
+    private string? statusFilter;
     private DateTime? startDate;
     private DateTime? endDate;
 
@@ -75,6 +85,10 @@
             if (!string.IsNullOrWhiteSpace(translatorFilter))
             {
                 result = result?.Where(t => t.Translator.Name.Contains(translatorFilter, StringComparison.OrdinalIgnoreCase));
+            }
+            if (!string.IsNullOrWhiteSpace(statusFilter))
+            {
+                result = result?.Where(t => t.StatusString.Contains(statusFilter, StringComparison.OrdinalIgnoreCase));
             }
             if (startDate != null)
             {

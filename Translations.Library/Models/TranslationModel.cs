@@ -20,4 +20,7 @@ public class TranslationModel
     public string? Error { get; set; }
 
     public DateTime Timestamp { get; set; }
+
+    public string StatusString => Status == 1 ? "Success" : "Error";
+    public string Response => Status == 1 ? TranslatedText! : Error!;
 }
