@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Translations.Database.publish.xml" />
+    <None Include="MsTranslatesDb.Script.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Translations.Database.refactorlog" />
